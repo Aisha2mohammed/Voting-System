@@ -20,7 +20,7 @@ Public Class Form5
     ' ===============================
     Private Sub LoadVotes()
 
-        Dim connString As String = "server=localhost;user id=root;password=;database=login_db"
+        Dim connString As String = DatabaseHelper.ConnString
 
         Using conn As New MySqlConnection(connString)
             conn.Open()
@@ -45,7 +45,7 @@ Public Class Form5
 
         Label2.Text = description
 
-        Dim connString As String = "server=localhost;user id=root;password=;database=login_db"
+        Dim connString As String = DatabaseHelper.ConnString
 
         Using conn As New MySqlConnection(connString)
             conn.Open()
@@ -81,7 +81,7 @@ Public Class Form5
     ' ===============================
     Private Sub LoadProfile()
 
-        Dim connString As String = "server=localhost;user id=root;password=;database=login_db"
+        Dim connString As String = DatabaseHelper.ConnString
 
         Using conn As New MySqlConnection(connString)
             conn.Open()
@@ -139,7 +139,7 @@ Public Class Form5
         Dim voteId As Integer = Convert.ToInt32(ListBox1.SelectedItem.ToString().Split("-")(0).Trim())
         Dim candidateId As Integer = DataGridView1.CurrentRow.Cells("id").Value
 
-        Dim connString As String = "server=localhost;user id=root;password=;database=login_db"
+        Dim connString As String = DatabaseHelper.ConnString
 
         Using conn As New MySqlConnection(connString)
             conn.Open()

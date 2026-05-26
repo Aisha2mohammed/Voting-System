@@ -11,7 +11,7 @@ Public Class Form1
             Exit Sub
         End If
 
-        Dim connString As String = "server=localhost;user id=root;password=;database=login_db"
+        Dim connString As String = DatabaseHelper.ConnString
 
         Try
             Using conn As New MySqlConnection(connString)

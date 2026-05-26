@@ -28,7 +28,7 @@ Public Class Form3
 
     ' 📊 LOAD USERS FROM DATABASE
     Private Sub LoadUsers()
-        Dim connString As String = "server=localhost;user id=root;password=;database=login_db"
+        Dim connString As String = DatabaseHelper.ConnString
 
         Try
             Using conn As New MySqlConnection(connString)
@@ -126,7 +126,7 @@ Public Class Form3
 
     ' 📥 Load Votes
     Private Sub LoadVotes()
-        Dim connString As String = "server=localhost;user id=root;password=;database=login_db"
+        Dim connString As String = DatabaseHelper.ConnString
 
         Try
             Using conn As New MySqlConnection(connString)
@@ -149,7 +149,7 @@ Public Class Form3
 
     ' 📊 Load Candidates
     Private Sub LoadCandidates(voteId As Integer)
-        Dim connString As String = "server=localhost;user id=root;password=;database=login_db"
+        Dim connString As String = DatabaseHelper.ConnString
 
         Try
             Using conn As New MySqlConnection(connString)
@@ -179,7 +179,7 @@ Public Class Form3
             Exit Sub
         End If
 
-        Dim connString As String = "server=localhost;user id=root;password=;database=login_db"
+        Dim connString As String = DatabaseHelper.ConnString
 
         Try
             Using conn As New MySqlConnection(connString)
@@ -225,7 +225,7 @@ Public Class Form3
         Dim selected As String = ListBox1.SelectedItem.ToString()
         Dim voteId As Integer = Convert.ToInt32(selected.Split("-")(0).Trim())
 
-        Dim connString As String = "server=localhost;user id=root;password=;database=login_db"
+        Dim connString As String = DatabaseHelper.ConnString
 
         Try
             Using conn As New MySqlConnection(connString)
@@ -251,7 +251,7 @@ Public Class Form3
 
         Dim id As Integer = DataGridView2.CurrentRow.Cells("id").Value
 
-        Dim connString As String = "server=localhost;user id=root;password=;database=login_db"
+        Dim connString As String = DatabaseHelper.ConnString
 
         Try
             Using conn As New MySqlConnection(connString)
@@ -275,7 +275,7 @@ Public Class Form3
 
     ' 📥 Load Profile
     Private Sub LoadProfile()
-        Dim connString As String = "server=localhost;user id=root;password=;database=login_db"
+        Dim connString As String = DatabaseHelper.ConnString
 
         Try
             Using conn As New MySqlConnection(connString)
