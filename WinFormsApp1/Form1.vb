@@ -17,42 +17,47 @@ Public Class Form1
             Using conn As New MySqlConnection(connString)
                 conn.Open()
 
-                Dim query As String = "SELECT role FROM users WHERE username=@user AND password=@pass"
+                ' Fetch the stored role AND password hash for the given username.
+                ' We then verify the entered password against the stored hash
+                ' with PasswordHelper.VerifyPassword (SHA-256).
+                Dim query As String = "SELECT role, password FROM users WHERE username=@user"
                 Using cmd As New MySqlCommand(query, conn)
 
                     cmd.Parameters.AddWithValue("@user", username)
-                    cmd.Parameters.AddWithValue("@pass", password)
 
-                    Dim result = cmd.ExecuteScalar()
+                    Using reader = cmd.ExecuteReader()
+                        If reader.Read() Then
+                            Dim role As String = reader("role").ToString().ToLower()
+                            Dim storedHash As String = reader("password").ToString()
 
-                    If result IsNot Nothing Then
-                        Dim role As String = result.ToString().ToLower()
+                            If PasswordHelper.VerifyPassword(password, storedHash) Then
+                                If role = "admin" Then
+                                    MessageBox.Show("Welcome Admin!")
 
-                        If role = "admin" Then
-                            MessageBox.Show("Welcome Admin!")
+                                    Dim adminForm As New Form3()
+                                    adminForm.loggedUsername = username
+                                    adminForm.Show()
+                                    Me.Hide()
 
-                            Dim adminForm As New Form3()
-                            adminForm.loggedUsername = username
-                            adminForm.Show()
-                            Me.Hide()
+                                ElseIf role = "user" Then
+                                    MessageBox.Show("Welcome User!")
 
-                        ElseIf role = "user" Then
-                            MessageBox.Show("Welcome User!")
+                                    ' OPEN FORM5 INSTEAD
+                                    Dim f As New Form5()
+                                    f.loggedUser = username
+                                    f.Show()
+                                    Me.Hide()
 
-                            ' 🔥 OPEN FORM5 INSTEAD
-                            Dim f As New Form5()
-                            f.loggedUser = username   ' 🔥 PASS USERNAME
-                            f.Show()
-                            Me.Hide()
-
+                                Else
+                                    MessageBox.Show("Unknown role detected!")
+                                End If
+                            Else
+                                MessageBox.Show("Invalid Username or Password")
+                            End If
                         Else
-                            MessageBox.Show("Unknown role detected!")
+                            MessageBox.Show("Invalid Username or Password")
                         End If
-
-                    Else
-                        MessageBox.Show("Invalid Username or Password")
-                    End If
-
+                    End Using
                 End Using
             End Using
 

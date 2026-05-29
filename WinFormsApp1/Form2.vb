@@ -46,7 +46,7 @@ Public Class Form2
                 Using insertCmd As New MySqlCommand(insertQuery, conn)
                     insertCmd.Parameters.AddWithValue("@fullname", fullname)
                     insertCmd.Parameters.AddWithValue("@user", username)
-                    insertCmd.Parameters.AddWithValue("@pass", password)
+                    insertCmd.Parameters.AddWithValue("@pass", PasswordHelper.HashPassword(password))
                     insertCmd.Parameters.AddWithValue("@role", "user")
 
                     insertCmd.ExecuteNonQuery()
